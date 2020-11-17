@@ -40,7 +40,7 @@ set(_itk_build_testing ${BUILD_TESTING})
 set(_itk_build_shared ${BUILD_SHARED_LIBS})
 set(BUILD_SHARED_LIBS OFF)
 set(elastix_GIT_REPOSITORY "https://github.com/SuperElastix/elastix.git")
-set(elastix_GIT_TAG "e72d2b690d0a0d869ec89cb9bd444a450d21bf88")
+set(elastix_GIT_TAG "3bb442536a68a6b0f63885bdc8631a3ffe052b25")
 FetchContent_Declare(
   elx
   GIT_REPOSITORY ${elastix_GIT_REPOSITORY}
@@ -79,6 +79,20 @@ endif()
 set(BUILD_TESTING ${_itk_build_testing})
 set(BUILD_SHARED_LIBS ${_itk_build_shared})
 
+
+# When this module is loaded by an app, load Elastix too.
+set(Elastix_EXPORT_CODE_INSTALL "
+set(Elastix_DIR \"${elx_BINARY_DIR}\")
+find_package(Elastix REQUIRED)
+include(\"${elx_BINARY_DIR}/ElastixTargets.cmake\")
+")
+set(Elastix_EXPORT_CODE_BUILD "
+if(NOT ITK_BINARY_DIR)
+  set(Elastix_DIR \"${elx_BINARY_DIR}\")
+  find_package(Elastix REQUIRED)
+  include(\"${elx_BINARY_DIR}/ElastixTargets.cmake\")
+endif()
+")
 
 if(NOT ITK_SOURCE_DIR)
   find_package(ITK REQUIRED)
