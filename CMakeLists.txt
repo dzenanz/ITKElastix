@@ -8,13 +8,13 @@ endif()
 # When this module is loaded by an app, load Elastix too.
 set(Elastix_EXPORT_CODE_INSTALL "
 set(Elastix_DIR \"${elx_BINARY_DIR}\")
-find_package(Elastix REQUIRED)
+find_package(Elastix REQUIRED CONFIG)
 include(\"${elx_BINARY_DIR}/ElastixTargets.cmake\")
 ")
 set(Elastix_EXPORT_CODE_BUILD "
 if(NOT ITK_BINARY_DIR)
   set(Elastix_DIR \"${elx_BINARY_DIR}\")
-  find_package(Elastix REQUIRED)
+  find_package(Elastix REQUIRED CONFIG)
   include(\"${elx_BINARY_DIR}/ElastixTargets.cmake\")
 endif()
 ")
